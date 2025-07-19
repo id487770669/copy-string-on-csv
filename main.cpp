@@ -5,17 +5,19 @@
 #include <iostream>
 #include <cstdlib>
 
-std::vector<std::string> readSurnamesFromCSV(const std::string& filename) {
-    std::vector<std::string> surnames;
-    std::ifstream file(filename);
+using namespace std;
+
+vector<string> readSurnamesFromCSV(const string& filename) {
+    vector<string> surnames;
+    ifstream file(filename);
 
     if (!file.is_open()) {
-        std::cerr << "Could not open the file!" << std::endl;
+        cerr << "Could not open the file!" << endl;
         return surnames;
     }
 
-    std::string line;
-    while (std::getline(file, line)) {
+    string line;
+    while (getline(file, line)) {
         if (!line.empty()) {
             surnames.push_back(line);
         }
@@ -25,14 +27,14 @@ std::vector<std::string> readSurnamesFromCSV(const std::string& filename) {
     return surnames;
 }
 
-void copyToClipboard(const std::string& text) {
-    std::string command = "echo -n '" + text + "' | xclip -selection clipboard";
+void copyToClipboard(const string& text) {
+    string command = "echo -n '" + text + "' | xclip -selection clipboard";
     system(command.c_str());
 }
 
 // Обработчик нажатия кнопки
 static void on_button_clicked(GtkWidget *widget, gpointer data) {
-    auto *surnames = static_cast<std::vector<std::string>*>(data);
+    auto *surnames = static_cast<vector<string>*>(data);
     static size_t index = 0;
 
     if (index < surnames->size()) {
@@ -44,7 +46,7 @@ static void on_button_clicked(GtkWidget *widget, gpointer data) {
 
         // Обновляем заголовок окна с текущим индексом
         GtkWidget *window = gtk_widget_get_toplevel(widget);
-        std::string title = "Copy - " + std::to_string(index + 1) + " of " + std::to_string(surnames->size());
+        string title = "Copy - " + to_string(index + 1) + " of " + to_string(surnames->size());
         gtk_window_set_title(GTK_WINDOW(window), title.c_str());
 
         index++;
@@ -54,11 +56,11 @@ static void on_button_clicked(GtkWidget *widget, gpointer data) {
 }
 
 int main(int argc, char *argv[]) {
-    std::string filename = "surnames.csv";
-    std::vector<std::string> surnames = readSurnamesFromCSV(filename);
+    string filename = "surnames.csv";
+    vector<string> surnames = readSurnamesFromCSV(filename);
 
     if (surnames.empty()) {
-        std::cerr << "No surnames found in the file!" << std::endl;
+        cerr << "No surnames found in the file!" << endl;
         return 1;
     }
 
