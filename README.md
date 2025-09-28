@@ -1,7 +1,7 @@
 # Кнопка копирования строк из CSV файла
 > сгенерировано ии
 
-0. apt-get install libgtk-3-dev
+> Необходима libgtk-3-dev
 
 1. g++ -o main main.cpp `pkg-config --cflags --libs gtk+-3.0`
 
